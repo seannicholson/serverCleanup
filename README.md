@@ -55,4 +55,9 @@ protect the security
 
 By default, servers that have been deactivated for more than 7 days will be
 moved by the script to the specified group. To change this, modify the value
-of deactivate_num_days in the config.py file.
+of move_deactivate_num_days in the config.py file.
+
+By default, servers that have been deactivated for more than 14 days and reside
+in the moveToGroupName group will be deleted by the script.
+To change this, modify the value of delete_deactivate_num_days in the
+config.py file.
