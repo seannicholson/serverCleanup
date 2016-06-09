@@ -14,36 +14,6 @@ from config import apiurl, move_deactivate_num_days, delete_deactivate_num_days,
 
 ###############################################################################
 
-
-###############################################################################
-# Variables
-# Please edit these values in the config.auth.  You can find these information
-# from HALO "[Site Administration] -> [API Keys]" page
-
-
-api_request_url = apiurl
-user_credential_b64 = ''
-headers = {}
-move_deactivate_num_days = move_deactivate_num_days
-delete_deactivate_num_days = delete_deactivate_num_days
-moveToGroupName = moveToGroupName
-api_key_loop_counter = 0
-PATH = api_keys_path
-global script_errors
-
-if not (moveToGroupName):
-    print "NO GROUP TO MOVE TO CONFIGRED!"
-    print "Please configure destination group in config.py"
-    print "Exiting..."
-    sys.exit(1)
-
-###############################################################################
-# Other variables
-#client_credential = api_key_id + ":" + api_secret_key
-#user_credential_b64 = "Basic " + base64.b64encode(client_credential)
-
-###############################################################################
-
 ###############################################################################
 # Define Methods
 
@@ -419,25 +389,88 @@ def delete_deactivated_servers():
 ###############################################################################
 # end of function definitions, begin inline code
 
+
+
+###############################################################################
+# Parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("--moveservers", help="Move all deactivated servers to group specified in config.py (moveToGroupName) file that have been deactivated for more than days specified in move_deactivate_num_days", action="store_true")
+parser.add_argument("--deleteservers", help="Delete all deactivated servers in group specified in config.py (moveToGroupName) file that have been deactivated for more than days specified in delete_deactivate_num_days", action="store_true")
+args = parser.parse_args()
+
+###############################################################################
+# Variables
+# Please edit these values in the config.auth.  You can find these information
+# from HALO "[Site Administration] -> [API Keys]" page
+
+# Set in config.py
+api_request_url = apiurl
+move_deactivate_num_days = move_deactivate_num_days
+delete_deactivate_num_days = delete_deactivate_num_days
+moveToGroupName = moveToGroupName
+PATH = api_keys_path
+
+# Set variable types
+user_credential_b64 = ''
+headers = {}
+api_key_description = ''
+
+# Set counters and sanity checkers
+script_errors = 0
+script_actions = 0
+api_key_loop_counter = 0
+###############################################################################
+
+###############################################################################
+# Validate script arguments are set and config.py variable values set
+
+# Check for script arguments
+if args.moveservers:
+    script_actions += 1
+if args.deleteservers:
+    script_actions +=1
+
+# If no arguments passed then exit with message
+if script_actions == 0:
+    print "No arguments passed to script, please specify script actions"
+    print "See README.md or run serverCleanup.py --help"
+    print "Nothing to do...Exiting...."
+    sys.exit(0)
+
+# Check moveToGroupName set in config.py
+if not (moveToGroupName):
+    print "NO GROUP TO MOVE TO CONFIGRED!"
+    print "Please configure destination group in config.py"
+    print "Exiting..."
+    sys.exit(1)
+
+###############################################################################
+
 #---MAIN---------------------------------------------------------------------
 # Reads in api_keys.txt file and loops through all available Keys
-# and runs get_headers and move_deactivated_servers for each provided
-# base64 keypair
+# and runs get_headers and methods passed from CLI arguments for each
+# provided base64 keypair
 
+
+# Check api_keys.txt exists and is readable
 if os.path.isfile(PATH) and os.access(PATH, os.R_OK):
     print "api_keys.txt file exists and is readable"
-    global api_key_description
+    # Open file and read lines into list
     with open('api_keys.txt') as f:
         content = f.readlines()
         f.close()
+        # Loop through list of API Keys and run CLI argument actions
         for apiKey in content:
             #print apiKey
             user_credential_b64 = "Basic " + base64.b64encode(apiKey[:41])
             api_key_description = apiKey[42:]
             #print user_credential_b64
             api_key_loop_counter += 1
+            # Get headers for API calls
             headers=get_headers()
-            move_deactivated_servers()
-            delete_deactivated_servers()
+            if args.moveservers:
+                move_deactivated_servers()
+            if args.deleteservers:
+                delete_deactivated_servers()
 else:
     print "api_keys.txt file either file is missing or is not readable"

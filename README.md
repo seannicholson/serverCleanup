@@ -36,6 +36,24 @@ Use PIP to install these if you are encountering errors for missing modules
 for pytz, requests, iso8601, os, os.path
    > pip install requests, pytz, iso8601
 
+For RPM Linux or MAC: run script_requirements.sh to install python modules needed for serverCleanup.py
+
+This script uses command line argument to specify what methods the script should run.
+Run serverCleanup.py --help to view options
+
+serverCleanup.py --help
+usage: serverCleanup.py [-h] [--moveservers] [--deleteservers]
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --moveservers    Move all deactivated servers to group specified in
+                   config.py (moveToGroupName) file that have been deactivated
+                   for more than days specified in move_deactivate_num_days
+  --deleteservers  Delete all deactivated servers in group specified in
+                   config.py (moveToGroupName) file that have been deactivated
+                   for more than days specified in delete_deactivate_num_days
+
+
 The script takes advantage of the new server field last_state_change and
 is intended to be run from cron on a restricted-access tools server or
 bastion box once daily.  Since last_state_change is only expressed in whole
