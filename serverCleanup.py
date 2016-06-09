@@ -390,12 +390,18 @@ def delete_deactivated_servers():
 # end of function definitions, begin inline code
 
 
+#---MAIN---------------------------------------------------------------------
+# Reads in api_keys.txt file and loops through all available Keys
+# and runs get_headers and methods passed from CLI arguments for each
+# provided base64 keypair
+
 
 ###############################################################################
 # Parse command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--moveservers", help="Move all deactivated servers to group specified in config.py (moveToGroupName) file that have been deactivated for more than days specified in move_deactivate_num_days", action="store_true")
 parser.add_argument("--deleteservers", help="Delete all deactivated servers in group specified in config.py (moveToGroupName) file that have been deactivated for more than days specified in delete_deactivate_num_days", action="store_true")
+parser.add_argument("--serversactiveagain", help="***Coming soon...", action="store_true")
 args = parser.parse_args()
 
 ###############################################################################
@@ -446,10 +452,6 @@ if not (moveToGroupName):
 
 ###############################################################################
 
-#---MAIN---------------------------------------------------------------------
-# Reads in api_keys.txt file and loops through all available Keys
-# and runs get_headers and methods passed from CLI arguments for each
-# provided base64 keypair
 
 
 # Check api_keys.txt exists and is readable
