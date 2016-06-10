@@ -1,5 +1,9 @@
 # move_deactivated_servers
 
+Disclaimer: This script is provided as is. USE AT YOUR OWN RISK.
+NOT A SUPPORTED SOLUTION
+
+
 This Python script utilizes the Halo API to automate tasks.
 This will help cloud forward customers with highly elastic environments
 keep their active server groups clean. Also this will allow for the issues
