@@ -14,16 +14,20 @@ Invoke the actions via command line argument switches:
                       config.py (moveToGroupName) file that have been
                       deactivated for more than days specified in
                       move_deactivate_num_days
+
 --deleteservers       See README.md --deleteservers disabled by default.
                       Delete all deactivated servers in group specified in
                       config.py (moveToGroupName) file that have been
                       deactivated for more than days specified in
                       delete_deactivate_num_days
+
 --retireservers       Retire all deactivated servers in group specified in
                       config.py (moveToGroupName) file that have been
                       deactivated for more than days specified in
                       retire_deactivate_num_days
+
 --serversactiveagain  Coming soon...
+
 --retiredserverlist   Print list of all retired servers in group specified
                       in config.py (moveToGroupName)
 
@@ -77,11 +81,11 @@ moved by the script to the specified group. To change this, modify the value
 of move_deactivate_num_days in the config.py file.
 
 ******IMPORTANT******
-*USE WITH CAUTION*
+******USE WITH CAUTION******
 This function is disabled by default
 You will have to edit the scrip to enable this function and assume all risks by doing so.
 You have been warned.
-Using --deleteservers command line argument will *DELETE* servers from your portal.
+Using --deleteservers command line argument will ***DELETE*** servers from your portal.
 
 The user of this script assumes all risks related to this. This script will only
 delete deactivated servers (not active, missing, or retired servers) and will
@@ -89,7 +93,7 @@ only delete servers from the specified group (moveToGroupName)
 
 If you use a gold image to deploy your servers and it is in the specified
 group (moveToGroupName) in a deactivated state, this script will delete it,
-so use *extreme caution* when using the --deleteservers command line
+so use ***extreme caution*** when using the --deleteservers command line
 argument switch
 
 By default, servers that have been deactivated for more than 30 days and reside
