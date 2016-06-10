@@ -226,7 +226,7 @@ def get_deactivated_servers_list_from_group():
             retry_loop_counter +=1
 
 # Get list of deactivated servers from group specified moveToGroupName
-def get_reitred_servers_list_from_group():
+def get_retired_servers_list_from_group():
     status_code = str("404")
     retry_loop_counter = 0
     deactivatedServersURL = api_request_url + "/v1/servers?state=retired&group_name=" + moveToGroupName
@@ -556,7 +556,7 @@ def delete_deactivated_servers():
 def retiredserverlist():
     reply = {}
     server_count = 0
-    reply = get_reitred_servers_list_from_group()
+    reply = get_retired_servers_list_from_group()
     if reply:
         print "\n****** Retire Server List Summary API Key #%d ******" % api_key_loop_counter
         if (api_key_description):
