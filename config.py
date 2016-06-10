@@ -30,6 +30,7 @@ moveToGroupName  = ''
 
 #******************************************************
 # Specify number of Days a server should be deactivated
+# before moveing to moveToGroupName
 # Default value is 7
 # Choose a value of -1 to move all
 # deactivated servers regardless of time deactivated
@@ -38,9 +39,18 @@ move_deactivate_num_days = 7
 
 #******************************************************
 # Specify number of Days a server should be deactivated
-# Default value is 14
+# before retiring server in moveToGroupName
+# Default value is 7
+# Choose a value of -1 to move all
+# deactivated servers regardless of time deactivated
+retire_deactivate_num_days = 14
+#******************************************************
+
+#******************************************************
+# Specify number of Days a server should be deactivated
+# Default value is 30
 # ****IMPORTANT******
-# It is not recommended to use a value of less than 0
+# It is not recommended to use a value of less than 3
 # for delete_deactivate_num_days
 # *******************
 # However....
@@ -48,5 +58,5 @@ move_deactivate_num_days = 7
 # deactivated servers in specified group
 # (moveToGroupName)
 # regardless of time deactivated
-delete_deactivate_num_days = 14
+delete_deactivate_num_days = 30
 #******************************************************

@@ -1,17 +1,31 @@
 # move_deactivated_servers
 
-This Python script will move deactivated servers contained in the
-Halo Group tree scope of the API Key specified into a specified
-group (moveToGroupName) based on number of days the server has been in
-a deactivated state (move_deactivate_num_days). Then the script will
-delete servers in the specified group (moveToGroupName) that have been
-deactivated for more than X days (delete_deactivate_num_days)
-
+This Python script utilizes the Halo API to automate tasks.
 This will help cloud forward customers with highly elastic environments
 keep their active server groups clean. Also this will allow for the issues
 per group reports to contain information for only active or recently
 deactivated servers and prevent reporting on systems that are no longer
 online or active.
+
+Invoke the actions via command line argument switches:
+
+-h, --help            show this help message and exit
+--moveservers         Move all deactivated servers to group specified in
+                      config.py (moveToGroupName) file that have been
+                      deactivated for more than days specified in
+                      move_deactivate_num_days
+--deleteservers       See README.md --deleteservers disabled by default.
+                      Delete all deactivated servers in group specified in
+                      config.py (moveToGroupName) file that have been
+                      deactivated for more than days specified in
+                      delete_deactivate_num_days
+--retireservers       Retire all deactivated servers in group specified in
+                      config.py (moveToGroupName) file that have been
+                      deactivated for more than days specified in
+                      retire_deactivate_num_days
+--serversactiveagain  Coming soon...
+--retiredserverlist   Print list of all retired servers in group specified
+                      in config.py (moveToGroupName)
 
 Use the following to redirect script output to a log file
 >python serverCleanup.py >  serverCleanup.$(date +%Y-%m-%d_%H:%M).log 2>&1
@@ -41,19 +55,6 @@ For RPM Linux or MAC: run script_requirements.sh to install python modules neede
 This script uses command line argument to specify what methods the script should run.
 Run serverCleanup.py --help to view options
 
-serverCleanup.py --help
-usage: serverCleanup.py [-h] [--moveservers] [--deleteservers]
-
-optional arguments:
-  -h, --help       show this help message and exit
-  --moveservers    Move all deactivated servers to group specified in
-                   config.py (moveToGroupName) file that have been deactivated
-                   for more than days specified in move_deactivate_num_days
-  --deleteservers  Delete all deactivated servers in group specified in
-                   config.py (moveToGroupName) file that have been deactivated
-                   for more than days specified in delete_deactivate_num_days
-
-
 The script takes advantage of the new server field last_state_change and
 is intended to be run from cron on a restricted-access tools server or
 bastion box once daily.  Since last_state_change is only expressed in whole
@@ -75,7 +76,23 @@ By default, servers that have been deactivated for more than 7 days will be
 moved by the script to the specified group. To change this, modify the value
 of move_deactivate_num_days in the config.py file.
 
-By default, servers that have been deactivated for more than 14 days and reside
+******IMPORTANT******
+*USE WITH CAUTION*
+This function is disabled by default
+You will have to edit the scrip to enable this function and assume all risks by doing so.
+You have been warned.
+Using --deleteservers command line argument will *DELETE* servers from your portal.
+
+The user of this script assumes all risks related to this. This script will only
+delete deactivated servers (not active, missing, or retired servers) and will
+only delete servers from the specified group (moveToGroupName)
+
+If you use a gold image to deploy your servers and it is in the specified
+group (moveToGroupName) in a deactivated state, this script will delete it,
+so use *extreme caution* when using the --deleteservers command line
+argument switch
+
+By default, servers that have been deactivated for more than 30 days and reside
 in the moveToGroupName group will be deleted by the script.
 To change this, modify the value of delete_deactivate_num_days in the
 config.py file.
