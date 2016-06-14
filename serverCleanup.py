@@ -442,7 +442,7 @@ def retire_deactivated_servers():
                 print "Unable to retire server."
                 if not server_id:
                     print "Server: %s (id %s) does not exist.\n" % (server_hostname, server_id)
-                elif diff_days <= move_deactivate_num_days:
+                elif diff_days <= retire_deactivate_num_days:
                     print "Server %s has been offline for %s days.\n" % (server_hostname, diff_days)
                     servers_ignored += 1
                 elif not newgroupID:
